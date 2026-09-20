@@ -54,15 +54,6 @@ namespace 代理连接器
             {
                 if (ProxyManager.SetSystemProxy())
                 {
-                    MessageBox.Show(
-                        "✓ 代理配置成功！\n\n" +
-                        "代理地址: 10.88.202.78\n" +
-                        "端口: 50000\n\n" +
-                        "内网 IP 已自动直连，无需通过代理。",
-                        "配置成功",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-
                     UpdateProxyStatus();
                 }
                 else
@@ -86,26 +77,16 @@ namespace 代理连接器
         {
             try
             {
-                if (MessageBox.Show("确定要禁用代理吗？\n\n禁用后将直接连接网络。", 
-                    "确认禁用", 
-                    MessageBoxButtons.YesNo, 
-                    MessageBoxIcon.Question) == DialogResult.Yes)
+                if (ProxyManager.DisableSystemProxy())
                 {
-                    if (ProxyManager.DisableSystemProxy())
-                    {
-                        MessageBox.Show("✓ 代理已成功禁用。", 
-                            "禁用成功", 
-                            MessageBoxButtons.OK, 
-                            MessageBoxIcon.Information);
-                        UpdateProxyStatus();
-                    }
-                    else
-                    {
-                        MessageBox.Show("❌ 禁用代理失败\n\n请检查是否有足够的权限。", 
-                            "禁用失败", 
-                            MessageBoxButtons.OK, 
-                            MessageBoxIcon.Error);
-                    }
+                    UpdateProxyStatus();
+                }
+                else
+                {
+                    MessageBox.Show("❌ 禁用代理失败\n\n请检查是否有足够的权限。", 
+                        "禁用失败", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
